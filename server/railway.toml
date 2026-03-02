@@ -2,18 +2,15 @@
 builder = "NIXPACKS"
 
 [deploy]
-# 从 server 目录启动
+# 构建命令：安装依赖并构建
+buildCommand = "pnpm install && pnpm run build"
+# 启动命令：使用 Railway 环境变量中的端口
 startCommand = "node dist/main.js"
+# 健康检查路径（注意：应用已设置全局前缀 'api'）
 healthcheckPath = "/api/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
-# 确保工作目录是 server
-workingDir = "."
 
 [deploy.env]
 NODE_ENV = "production"
-
-# 添加 Railway 特定配置
-[deploy.buildCommand]
-# 使用 pnpm 构建命令
-command = "pnpm install && pnpm run build"
+# Railway 会自动设置 PORT 环境变量
