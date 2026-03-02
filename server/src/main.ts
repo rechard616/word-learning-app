@@ -4,10 +4,19 @@ import * as express from 'express';
 import { HttpStatusInterceptor } from '@/interceptors/http-status.interceptor';
 
 function parsePort(): number {
-  // 优先使用 Railway 环境变量 PORT
-  const envPort = process.env.PORT;
+  // 开发环境：优先使用环境变量 SERVER_PORT
+  const envPort = process.env.SERVER_PORT;
   if (envPort) {
     const port = parseInt(envPort, 10);
+    if (!isNaN(port) && port > 0 && port < 65536) {
+      return port;
+    }
+  }
+
+  // 生产环境（Railway）：使用 PORT 环境变量
+  const railWayPort = process.env.PORT;
+  if (railWayPort && process.env.RAILWAY_ENVIRONMENT) {
+    const port = parseInt(railWayPort, 10);
     if (!isNaN(port) && port > 0 && port < 65536) {
       return port;
     }
