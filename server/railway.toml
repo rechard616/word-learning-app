@@ -1,7 +1,5 @@
 [build]
 builder = "NIXPACKS"
-# 构建工作目录
-workingDir = "server"
 
 [deploy]
 # 从 server 目录启动
@@ -9,12 +7,13 @@ startCommand = "node dist/main.js"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
-# 工作目录指向 server
-workingDir = "server"
+# 确保工作目录是 server
+workingDir = "."
 
 [deploy.env]
 NODE_ENV = "production"
 
-# 构建命令
+# 添加 Railway 特定配置
 [deploy.buildCommand]
-command = "cd server && pnpm install && pnpm run build"
+# 使用 pnpm 构建命令
+command = "pnpm install && pnpm run build"
