@@ -27,6 +27,9 @@
     "rxjs": "^7.8.1",
     "zod": "^4.3.5"
   },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.9.1"
+  },
   "devDependencies": {
     "@nestjs/cli": "^10.4.9",
     "@nestjs/schematics": "^10.2.3",
